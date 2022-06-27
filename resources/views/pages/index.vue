@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CommentForm from "../components/comment-form.vue";
+</script>
 
 <template layout>
     <h1 class="is-size-1 has-text-weight-semibold mb-6 pb-3">
@@ -25,24 +27,6 @@
         <br />
         <br />
 
-        Nulla sed dui non lorem malesuada dictum. Sed luctus augue ac tortor
-        tincidunt auctor. Sed tempor maximus velit, in malesuada nunc cursus
-        quis. Maecenas ut nisl dictum, bibendum orci vel, congue enim.
-        Suspendisse eget neque congue, luctus nulla ut, vehicula mi. Curabitur
-        sit amet libero nec leo fringilla facilisis sed at tortor. Nulla sit
-        amet consectetur mauris. Cras dictum sapien a nisi posuere, eu ultricies
-        eros volutpat. Class aptent taciti sociosqu ad litora torquent per
-        conubia nostra, per inceptos himenaeos. Integer a lacinia mi, sit amet
-        consequat purus. Suspendisse potenti. In quis nulla elementum, porttitor
-        lacus a, venenatis arcu. Integer nibh nisl, scelerisque in dignissim in,
-        dignissim vel est. Praesent sodales, mauris in pharetra tempor, lorem mi
-        sagittis diam, vitae vehicula est sem quis felis. Suspendisse in diam
-        sem. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-        Praesent mattis purus sit amet pulvinar pretium.
-
-        <br />
-        <br />
-
         Integer a lacinia mi, sit amet consequat purus. Suspendisse potenti. In
         quis nulla elementum, porttitor lacus a, venenatis arcu. Integer nibh
         nisl, scelerisque in dignissim in, dignissim vel est. Praesent sodales,
@@ -51,4 +35,10 @@
         ante ipsum primis in faucibus. Praesent mattis purus sit amet pulvinar
         pretium.
     </p>
+
+    <hr class="my-5" />
+
+    <h4 class="is-size-4 has-text-weight-medium mb-5">Comments</h4>
+
+    <CommentForm />
 </template>
