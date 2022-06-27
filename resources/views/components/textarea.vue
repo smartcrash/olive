@@ -4,11 +4,12 @@ import autosize from "autosize";
 
 interface Props {
     label?: string;
+    name?: string;
     placeholder?: string;
     rows?: string | number;
 }
 
-const { label, rows = 3, placeholder } = defineProps<Props>();
+const { label, name, rows = 3, placeholder } = defineProps<Props>();
 
 const textarea = ref<HTMLInputElement | null>(null);
 
@@ -22,7 +23,7 @@ onMounted(() => autosize(textarea.value!));
             <textarea
                 class="textarea"
                 ref="textarea"
-                v-bind="{ rows, placeholder }"
+                v-bind="{ rows, placeholder, name }"
             />
         </div>
     </div>
