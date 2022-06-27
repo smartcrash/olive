@@ -19,6 +19,7 @@
 @import "bulma/sass/utilities/_all.sass";
 
 $container-max-width: 844px + (2 * $gap);
+$input-radius: 6px;
 
 // Utilities & helpers
 @import "bulma/sass/helpers/spacing.sass";
