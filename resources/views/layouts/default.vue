@@ -28,6 +28,8 @@ $container-max-width: 844px + (2 * $gap);
 @import "bulma/sass/elements/container.sass";
 @import "bulma/sass/layout/section.sass";
 
+@import "bulma/sass/elements/button.sass";
+
 @import "bulma/sass/form/shared.sass";
 @import "bulma/sass/form/tools.sass";
 @import "bulma/sass/form/input-textarea.sass";
