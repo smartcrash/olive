@@ -4,7 +4,27 @@
 </script>
 
 <template>
-    <slot />
+    <section class="section">
+        <div class="container">
+            <slot />
+        </div>
+    </section>
 </template>
 
-<style></style>
+<style lang="scss">
+// Use Bulma (https://bulma.io) CSS framework for styling
+// Just import what's needed.
+
+@import "bulma/sass/base/_all.sass";
+@import "bulma/sass/utilities/_all.sass";
+
+$container-max-width: 844px + (2 * $gap);
+
+// Utilities & helpers
+@import "bulma/sass/helpers/spacing.sass";
+@import "bulma/sass/helpers/typography.sass";
+
+// Elements & Components
+@import "bulma/sass/elements/container.sass";
+@import "bulma/sass/layout/section.sass";
+</style>
