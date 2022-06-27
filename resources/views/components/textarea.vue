@@ -4,6 +4,7 @@ import autosize from "autosize";
 
 interface Props {
     label?: string;
+    error?: string;
     name?: string;
     placeholder?: string;
     rows?: string | number;
@@ -29,6 +30,7 @@ const {
     rows = 3,
     placeholder,
     colorScheme,
+    error,
     isLoading = false,
 } = defineProps<Props>();
 
@@ -42,10 +44,18 @@ onMounted(() => autosize(textarea.value!));
         <label v-if="!!label" class="label">{{ label }}</label>
         <div :class="['control', { ['is-loading']: isLoading }]">
             <textarea
-                :class="['textarea', { [`is-${colorScheme}`]: !!colorScheme }]"
+                :class="[
+                    'textarea',
+                    {
+                        [`is-${colorScheme}`]: !!colorScheme,
+                        'is-danger': !!error,
+                    },
+                ]"
                 ref="textarea"
                 v-bind="{ rows, placeholder, name, disabled: isLoading }"
             />
         </div>
+
+        <p v-if="!!error" class="help is-danger">{{ error }}</p>
     </div>
 </template>

@@ -6,6 +6,7 @@ interface Props {
     placeholder?: string;
     autocomplete?: string;
     isLoading?: boolean;
+    error?: string;
     colorScheme?:
         | "white"
         | "light"
@@ -28,6 +29,7 @@ const {
     placeholder,
     autocomplete,
     colorScheme,
+    error,
     isLoading = false,
 } = defineProps<Props>();
 </script>
@@ -37,7 +39,13 @@ const {
         <label v-if="!!label" class="label">{{ label }}</label>
         <div :class="['control', { 'is-loading': isLoading }]">
             <input
-                :class="['input', { [`is-${colorScheme}`]: !!colorScheme }]"
+                :class="[
+                    'input',
+                    {
+                        [`is-${colorScheme}`]: !!colorScheme,
+                        'is-danger': !!error,
+                    },
+                ]"
                 v-bind="{
                     type,
                     name,
@@ -47,5 +55,7 @@ const {
                 }"
             />
         </div>
+
+        <p v-if="!!error" class="help is-danger">{{ error }}</p>
     </div>
 </template>
