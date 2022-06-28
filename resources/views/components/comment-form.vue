@@ -3,7 +3,7 @@ import Input from "../components/input.vue";
 import Button from "../components/button.vue";
 import Textarea from "../components/textarea.vue";
 import { Inertia } from "@inertiajs/inertia";
-import useForm from "../../scripts/hooks/useForm";
+import useForm from "../../hooks/useForm";
 
 type FieldValues = {
     author: string;
