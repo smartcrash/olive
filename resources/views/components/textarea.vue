@@ -6,6 +6,7 @@ interface Props {
     label?: string;
     error?: string;
     name?: string;
+    required?: boolean;
     placeholder?: string;
     rows?: string | number;
     isLoading?: boolean;
@@ -27,6 +28,7 @@ interface Props {
 const {
     label,
     name,
+    required,
     rows = 3,
     placeholder,
     colorScheme,
@@ -52,7 +54,13 @@ onMounted(() => autosize(textarea.value!));
                     },
                 ]"
                 ref="textarea"
-                v-bind="{ rows, placeholder, name, disabled: isLoading }"
+                v-bind="{
+                    rows,
+                    placeholder,
+                    name,
+                    disabled: isLoading,
+                    required,
+                }"
             />
         </div>
 

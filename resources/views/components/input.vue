@@ -2,6 +2,7 @@
 interface Props {
     label?: string;
     type?: string;
+    required?: boolean;
     name?: string;
     placeholder?: string;
     autocomplete?: string;
@@ -32,6 +33,7 @@ const {
     autocomplete,
     colorScheme,
     error,
+    required,
     isLoading = false,
 } = defineProps<Props>();
 </script>
@@ -52,6 +54,7 @@ const {
                     type,
                     name,
                     placeholder,
+                    required,
                     autocomplete,
                     disabled: isLoading,
                     autoFocus,
