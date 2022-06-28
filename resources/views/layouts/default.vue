@@ -10,28 +10,3 @@
         </div>
     </section>
 </template>
-
-<style lang="scss">
-// Use Bulma (https://bulma.io) CSS framework for styling
-// Just import what's needed.
-
-@import "bulma/sass/base/_all.sass";
-@import "bulma/sass/utilities/_all.sass";
-
-$container-max-width: 844px + (2 * $gap);
-$input-radius: 6px;
-
-// Utilities & helpers
-@import "bulma/sass/helpers/spacing.sass";
-@import "bulma/sass/helpers/typography.sass";
-
-// Elements & Components
-@import "bulma/sass/elements/container.sass";
-@import "bulma/sass/layout/section.sass";
-
-@import "bulma/sass/elements/button.sass";
-
-@import "bulma/sass/form/shared.sass";
-@import "bulma/sass/form/tools.sass";
-@import "bulma/sass/form/input-textarea.sass";
-</style>
