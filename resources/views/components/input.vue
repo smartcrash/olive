@@ -6,6 +6,7 @@ interface Props {
     placeholder?: string;
     autocomplete?: string;
     isLoading?: boolean;
+    autoFocus?: boolean;
     error?: string;
     colorScheme?:
         | "white"
@@ -27,6 +28,7 @@ const {
     name,
     type,
     placeholder,
+    autoFocus,
     autocomplete,
     colorScheme,
     error,
@@ -52,6 +54,7 @@ const {
                     placeholder,
                     autocomplete,
                     disabled: isLoading,
+                    autoFocus,
                 }"
             />
         </div>
