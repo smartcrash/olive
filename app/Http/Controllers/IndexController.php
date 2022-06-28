@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
+use App\Interfaces\CommentRepositoryInterface;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
+    private CommentRepositoryInterface $commentRepository;
+
+    public function __construct(CommentRepositoryInterface $commentRepository)
+    {
+        $this->commentRepository = $commentRepository;
+    }
+
     /**
      * Handle the incoming request.
      *
@@ -15,10 +22,7 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $comments = Comment::whereNull('parent_id') // Only get level 1 comments
-            ->withCount('children')                 // Count the childre so on UI we know if show load more
-            ->orderBy('created_at', 'DESC')
-            ->get();
+        $comments = $this->commentRepository->all();
 
         return inertia('index', compact('comments'));
     }

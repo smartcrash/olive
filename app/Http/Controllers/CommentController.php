@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommentRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Interfaces\CommentRepositoryInterface;
 
 class CommentController extends Controller
 {
+    private CommentRepositoryInterface $commentRepository;
+
+    public function __construct(CommentRepositoryInterface $commentRepository)
+    {
+        $this->commentRepository = $commentRepository;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -16,13 +24,8 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
-        $validated = $request->validated();
-
-        $comment = new  Comment();
-        $comment->author = $validated['author'];
-        $comment->content = $validated['content'];
-        $comment->parent_id = $validated['parent_id'] ?? null;
-        $comment->save();
+        $attributes = $request->validated();
+        $this->commentRepository->create($attributes);
     }
 
 
@@ -35,9 +38,6 @@ class CommentController extends Controller
      */
     public function children(Request $request, Comment $comment)
     {
-        return Comment::where('parent_id', $comment->id)
-            ->withCount('children')
-            ->orderBy('created_at', 'DESC')
-            ->get();
+        return $this->commentRepository->children($comment->id);
     }
 }
