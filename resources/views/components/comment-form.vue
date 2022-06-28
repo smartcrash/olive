@@ -10,7 +10,9 @@ type FieldValues = {
     content: string;
 };
 
-const { handleSubmit, setErrors, isSubmiting, errors } = useForm<FieldValues>();
+const { handleSubmit, setErrors, isSubmiting, errors } = useForm<FieldValues>({
+    resetAfterSubmit: true,
+});
 
 const onSubmit = handleSubmit((data) => {
     Inertia.post("comments", data, {
