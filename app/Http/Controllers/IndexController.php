@@ -15,7 +15,10 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $comments = Comment::orderBy('created_at', 'DESC')->get();
+        $comments = Comment::whereNull('parent_id') // Only get level 1 comments
+            ->withCount('children')                 // Count the childre so on UI we know if show load more
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
         return inertia('index', compact('comments'));
     }
