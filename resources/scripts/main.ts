@@ -1,6 +1,7 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/inertia-vue3'
 import { importPageComponent } from '@/scripts/vite/import-page-component'
+import '../styles/index.scss'
 
 createInertiaApp({
     resolve: (name) => importPageComponent(name, import.meta.glob('../views/pages/**/*.vue')),
