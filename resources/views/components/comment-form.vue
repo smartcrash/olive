@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import Input from "../components/input.vue";
-import Button from "../components/button.vue";
-import Textarea from "../components/textarea.vue";
-import { Comment } from "../../types";
+import { ref } from "vue";
 import useForm from "../../hooks/useForm";
+import { Comment } from "../../types";
+import Button from "../components/button.vue";
+import Input from "../components/input.vue";
+import Textarea from "../components/textarea.vue";
 
 const ESCAPE = "Escape";
+const ENTER = "Enter";
 
 type FieldValues = {
     author: string;
@@ -21,8 +23,13 @@ const emit = defineEmits<{
 
 const { handleSubmit, isSubmiting, errors } = useForm<FieldValues>();
 
+const submitRef = ref<HTMLInputElement>();
+
 const onKeyDown = (event: KeyboardEvent) => {
     if (event.key === ESCAPE) emit("cancel");
+
+    // This triggers form submit when Ctrl + Enter is pressed
+    if (event.key === ENTER && event.ctrlKey) submitRef.value?.click();
 };
 
 const onSubmit = handleSubmit((data) =>
@@ -37,6 +44,7 @@ const onSubmit = handleSubmit((data) =>
             name="author"
             required
             placeholder="Enter your name"
+            auto-focus
             autocomplete="username"
             :error="errors.author"
             :is-loading="isSubmiting"
@@ -58,7 +66,12 @@ const onSubmit = handleSubmit((data) =>
                 @click="() => emit('cancel')"
                 >Cancel</Button
             >
-            <Button type="submit" :is-loading="isSubmiting">Comment</Button>
+            <Button
+                @ref="(el) => (submitRef = el)"
+                type="submit"
+                :is-loading="isSubmiting"
+                >Comment</Button
+            >
         </div>
     </form>
 </template>
