@@ -10,6 +10,11 @@ type FieldValues = {
     content: string;
 };
 
+const emit = defineEmits<{
+    (e: "confirm"): void;
+    (e: "cancel"): void;
+}>();
+
 const { handleSubmit, setErrors, isSubmiting, errors } = useForm<FieldValues>({
     resetAfterSubmit: true,
 });
@@ -17,7 +22,7 @@ const { handleSubmit, setErrors, isSubmiting, errors } = useForm<FieldValues>({
 const onSubmit = handleSubmit((data) => {
     Inertia.post("comments", data, {
         preserveScroll: true,
-        onSuccess: () => console.log("succsess!"),
+        onSuccess: () => emit("confirm"),
         onError: (error) => setErrors(error as any),
     });
 });
@@ -42,6 +47,14 @@ const onSubmit = handleSubmit((data) => {
             :is-loading="isSubmiting"
         />
 
-        <Button type="submit" :is-loading="isSubmiting">Comment</Button>
+        <div class="flex space-x-5 justify-end">
+            <Button
+                color-scheme="white"
+                :is-loading="isSubmiting"
+                @click="() => emit('cancel')"
+                >Cancel</Button
+            >
+            <Button type="submit" :is-loading="isSubmiting">Comment</Button>
+        </div>
     </form>
 </template>
