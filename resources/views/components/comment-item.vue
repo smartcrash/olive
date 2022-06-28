@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { Comment } from "../../types";
-import prettyMiliseconds from "pretty-ms";
 import { differenceInMilliseconds } from "date-fns";
-import Button from "./button.vue";
-import CommentList from "./comment-list.vue";
+import prettyMiliseconds from "pretty-ms";
+import { ref } from "vue";
 import useDisclosure from "../../hooks/useDisclosure";
 import useFetch from "../../hooks/useFetch";
+import { Comment } from "../../types";
+import Button from "./button.vue";
 import CommentForm from "./comment-form.vue";
-import { computed } from "@vue/reactivity";
+import CommentList from "./comment-list.vue";
 
 type Props = { comment: Comment };
 
 const { comment } = defineProps<Props>();
+
+const emit = defineEmits<(e: "comment", comment: Partial<Comment>) => void>();
 
 const {
     isOpen: isReplying,
@@ -19,19 +21,37 @@ const {
     onClose: onReplyClose,
 } = useDisclosure();
 
-const { isOpen, onToggle } = useDisclosure();
+const {
+    isOpen: showReplies,
+    onOpen: onShowReplies,
+    onToggle: onToggleReplies,
+} = useDisclosure();
 
 const { execute, data, error, isFetching } = useFetch<Comment[]>(
     `comments/${comment.id}/children`,
-    { inmediate: isOpen.value }
+    { inmediate: showReplies.value }
 );
 
-const showReplies = computed(() => isOpen.value && comment.children_count > 0);
+const childrenCount = ref(comment.children_count);
 
 const humarizedDifferene = prettyMiliseconds(
     differenceInMilliseconds(new Date(), new Date(comment.created_at)),
-    { compact: true }
+    { verbose: false, compact: true }
 );
+
+function onCommentConfirm(newComment: Partial<Comment>) {
+    onReplyClose();
+    emit("comment", newComment);
+
+    // Update childrenCount that way the `show replies` button will show
+    // in the case that this was the first reply
+    childrenCount.value++;
+
+    onShowReplies();
+
+    // Re-fectch children to update the listing
+    execute();
+}
 </script>
 
 <template>
@@ -52,12 +72,12 @@ const humarizedDifferene = prettyMiliseconds(
             >
 
             <Button
-                v-if="comment.children_count > 0"
+                v-if="childrenCount > 0"
                 size="small"
                 variant="ghost"
                 color-scheme="ghost"
-                @click="() => [onToggle(), execute()]"
-                >{{ isOpen ? "Hide" : "Show" }} replies</Button
+                @click="() => [onToggleReplies(), execute()]"
+                >{{ showReplies ? "Hide" : "Show" }} replies</Button
             >
         </div>
 
@@ -66,7 +86,7 @@ const humarizedDifferene = prettyMiliseconds(
                 v-if="isReplying"
                 class="pt-5"
                 :parent-id="comment.id"
-                @confirm="onReplyClose"
+                @confirm="onCommentConfirm"
                 @cancel="onReplyClose"
             />
 
