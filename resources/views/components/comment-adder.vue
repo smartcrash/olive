@@ -6,6 +6,11 @@ import { Comment } from "../../types";
 const emit = defineEmits<(e: "confirm", comment: Partial<Comment>) => void>();
 
 const { isOpen, onOpen, onClose } = useDisclosure();
+
+function confirmComment(comment: Partial<Comment>) {
+    emit("confirm", comment);
+    onClose();
+}
 </script>
 
 <template>
@@ -16,9 +21,5 @@ const { isOpen, onOpen, onClose } = useDisclosure();
     >
         <i class="mr-3 text-lg">💬</i> Add comment...</a
     >
-    <CommentForm
-        v-else
-        @confirm="(comment) => emit('confirm', comment)"
-        @cancel="onClose"
-    />
+    <CommentForm v-else @confirm="confirmComment" @cancel="onClose" />
 </template>
