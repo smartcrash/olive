@@ -16,6 +16,7 @@ const { comments } = defineProps<Props>();
 function onNewComment(data: Partial<Comment>) {
     Inertia.post("comments", data, {
         preserveScroll: true,
+        preserveState: true,
         onSuccess: () => {}, // TODO: Show toast or something.
         onError: (error) => console.error(error),
     });
