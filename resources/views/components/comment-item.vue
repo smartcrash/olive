@@ -97,6 +97,7 @@ function onCommentConfirm(newComment: Partial<Comment>) {
                         v-for="child in data"
                         :comment="child"
                         :key="comment.id"
+                        @comment="(subComment) => emit('comment', subComment)"
                     />
                 </CommentList>
                 <p v-else class="pt-5 text-sm text-red-500">
