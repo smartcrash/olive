@@ -18,6 +18,12 @@ class CreateCommentsTable extends Migration
             $table->text('author');
             $table->text('content');
             $table->timestamps();
+
+            $table->foreignId('parent_id')
+                ->nullable()
+                ->constrained('comments')
+                ->cascadeOnUpdate()
+                ->candaOnDelete();
         });
     }
 

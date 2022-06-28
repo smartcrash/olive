@@ -12,6 +12,8 @@ type FieldValues = {
     content: string;
 };
 
+const { parentId } = defineProps<{ parentId?: number }>();
+
 const emit = defineEmits<{
     (e: "confirm"): void;
     (e: "cancel"): void;
@@ -24,11 +26,15 @@ const onKeyDown = (event: KeyboardEvent) => {
 };
 
 const onSubmit = handleSubmit((data) => {
-    Inertia.post("comments", data, {
-        preserveScroll: true,
-        onSuccess: () => emit("confirm"),
-        onError: (error) => setErrors(error as any),
-    });
+    Inertia.post(
+        "comments",
+        { ...data, parent_id: parentId ?? "" },
+        {
+            preserveScroll: true,
+            onSuccess: () => emit("confirm"),
+            onError: (error) => setErrors(error as any),
+        }
+    );
 });
 </script>
 

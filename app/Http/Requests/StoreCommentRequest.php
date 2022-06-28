@@ -26,6 +26,7 @@ class StoreCommentRequest extends FormRequest
         return [
             'author' => 'required|max:255',
             'content' => 'required',
+            'parent_id' => 'nullable|exists:comments,id'
         ];
     }
 }
