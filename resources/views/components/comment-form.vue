@@ -69,6 +69,7 @@ const onSubmit = handleSubmit((data) =>
             <Button
                 @ref="(el) => (submitRef = el)"
                 type="submit"
+                color-scheme="dark"
                 :is-loading="isSubmiting"
                 >Comment</Button
             >

@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import Button from "../components/button.vue";
 import CommentItem from "../components/comment-item.vue";
 import CommentList from "../components/comment-list.vue";
 import CommentAdder from "../components/comment-adder.vue";
-import { Comment } from "../../types";
+import { Link } from "@inertiajs/inertia-vue3";
+import { Comment, Paginated } from "../../types";
 import { Inertia } from "@inertiajs/inertia";
 
 interface Props {
-    comments: Comment[];
+    comments: Paginated<Comment>;
 }
 
 const { comments } = defineProps<Props>();
@@ -62,17 +64,35 @@ function onNewComment(data: Partial<Comment>) {
 
     <CommentList>
         <CommentItem
-            v-for="comment in comments"
+            v-for="comment in comments.data"
             :comment="comment"
             @comment="onNewComment"
             :key="comment.id"
         />
     </CommentList>
 
-    <!--
-    TODO: Add pagination.
-    <div class="flex justify-center mt-5">
-        <Button color-scheme="light">Load more...</Button>
+    <div
+        v-if="comments.next_page_url || comments.prev_page_url"
+        class="flex justify-center mt-5 space-x-2"
+    >
+        <Link
+            v-if="comments.prev_page_url"
+            preserve-scroll
+            preserve-state
+            :href="comments.prev_page_url"
+            :only="['comments']"
+        >
+            <Button color-scheme="dark">Previous</Button>
+        </Link>
+
+        <Link
+            v-if="comments.next_page_url"
+            preserve-scroll
+            preserve-state
+            :href="comments.next_page_url"
+            :only="['comments']"
+        >
+            <Button color-scheme="dark">Next</Button>
+        </Link>
     </div>
-    -->
 </template>
