@@ -1,3 +1,9 @@
+# Olive
+
+A simple comment system made with Laravel 9 and Vue 3
+
+![](screenshot.png)
+
 ## Installation
 
 Clone the repo locally:
