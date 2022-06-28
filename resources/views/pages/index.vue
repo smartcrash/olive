@@ -61,7 +61,12 @@ function onNewComment(data: Partial<Comment>) {
     <CommentAdder @confirm="onNewComment" />
 
     <CommentList>
-        <CommentItem v-for="comment in comments" :comment="comment" />
+        <CommentItem
+            v-for="comment in comments"
+            :comment="comment"
+            @comment="onNewComment"
+            :key="comment.id"
+        />
     </CommentList>
 
     <!--

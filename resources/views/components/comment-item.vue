@@ -73,7 +73,11 @@ const humarizedDifferene = prettyMiliseconds(
             <template v-if="showReplies">
                 <p v-if="isFetching" class="pt-5 text-sm">Loading...</p>
                 <CommentList v-else-if="data">
-                    <comment-item v-for="child in data" :comment="child" />
+                    <comment-item
+                        v-for="child in data"
+                        :comment="child"
+                        :key="comment.id"
+                    />
                 </CommentList>
                 <p v-else class="pt-5 text-sm text-red-500">
                     Error: {{ error }}
