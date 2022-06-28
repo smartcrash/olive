@@ -20,6 +20,12 @@ class CommentRepository implements CommentRepositoryInterface
     public function create(array $attributes): Comment
     {
         $comment = new  Comment($attributes);
+
+        if (array_key_exists('parent_id', $attributes) && is_numeric($attributes['parent_id'])) {
+            $parent = Comment::findOrFail($attributes['parent_id']);
+            $comment->depth = $parent->depth + 1;
+        }
+
         $comment->save();
 
         return $comment;

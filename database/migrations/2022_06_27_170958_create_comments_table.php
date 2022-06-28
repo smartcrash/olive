@@ -17,6 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->text('author');
             $table->text('content');
+            $table->integer('depth')->default(0);
             $table->timestamps();
 
             $table->foreignId('parent_id')

@@ -64,6 +64,7 @@ function onCommentConfirm(newComment: Partial<Comment>) {
 
         <div class="flex space-x-2">
             <Button
+                v-if="comment.depth < 2"
                 size="small"
                 variant="ghost"
                 color-scheme="ghost"

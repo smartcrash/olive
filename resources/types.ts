@@ -16,6 +16,7 @@ export type Comment = {
     content: string;
     created_at: string;
     updated_at: string;
+    depth: number;
     children_count: number;
     parent_id: number | null
     path: string
