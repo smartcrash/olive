@@ -1,13 +1,22 @@
 <script setup lang="ts">
 import CommentForm from "../components/comment-form.vue";
+import { Comment } from "../../types";
+import CommentItem from "../components/comment-item.vue";
+import CommentList from "../components/comment-list.vue";
+
+interface Props {
+    comments: Comment[];
+}
+
+const { comments } = defineProps<Props>();
 </script>
 
 <template layout>
-    <h1 class="is-size-1 has-text-weight-semibold mb-6 pb-3">
+    <h1 class="text-5xl font-bold mb-12">
         Sed at augue ipsum. Integer semper nisl a elit placerat
     </h1>
 
-    <p>
+    <p class="text-gray-500 leading-8 font-normal">
         Suspendisse malesuada, massa in convallis vehicula, orci sapien rutrum
         lectus, in molestie massa quam a enim. Sed porta sodales viverra.
         Integer ut suscipit enim, in elementum libero. Cras non vestibulum enim.
@@ -36,9 +45,13 @@ import CommentForm from "../components/comment-form.vue";
         pretium.
     </p>
 
-    <hr class="my-5" />
+    <hr class="my-12" />
 
-    <h4 class="is-size-4 has-text-weight-medium mb-5">Comments</h4>
+    <h4 class="text-xl font-semibold mb-6">Comments</h4>
 
     <CommentForm />
+
+    <CommentList>
+        <CommentItem v-for="comment in comments" :comment="comment" />
+    </CommentList>
 </template>
