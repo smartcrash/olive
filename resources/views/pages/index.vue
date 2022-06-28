@@ -3,6 +3,7 @@ import CommentForm from "../components/comment-form.vue";
 import { Comment } from "../../types";
 import CommentItem from "../components/comment-item.vue";
 import CommentList from "../components/comment-list.vue";
+import CommentAdder from "../components/comment-adder.vue";
 
 interface Props {
     comments: Comment[];
@@ -49,7 +50,7 @@ const { comments } = defineProps<Props>();
 
     <h4 class="text-xl font-semibold mb-6">Comments</h4>
 
-    <CommentForm />
+    <CommentAdder />
 
     <CommentList>
         <CommentItem v-for="comment in comments" :comment="comment" />
