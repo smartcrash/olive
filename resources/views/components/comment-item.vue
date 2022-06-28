@@ -29,7 +29,7 @@ const {
 
 const { execute, data, error, isFetching } = useFetch<Comment[]>(
     `comments/${comment.id}/children`,
-    { inmediate: showReplies.value }
+    { immediate: showReplies.value }
 );
 
 const childrenCount = ref(comment.children_count);
