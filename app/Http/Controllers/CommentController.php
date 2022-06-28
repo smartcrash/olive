@@ -21,7 +21,7 @@ class CommentController extends Controller
         $comment = new  Comment();
         $comment->author = $validated['author'];
         $comment->content = $validated['content'];
-        $comment->parent_id = $validated['parent_id'];
+        $comment->parent_id = $validated['parent_id'] ?? null;
         $comment->save();
     }
 
