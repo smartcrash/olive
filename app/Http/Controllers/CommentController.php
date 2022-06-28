@@ -35,6 +35,9 @@ class CommentController extends Controller
      */
     public function children(Request $request, Comment $comment)
     {
-        dd($comment->content);
+        return Comment::where('parent_id', $comment->id)
+            ->withCount('children')
+            ->orderBy('created_at', 'DESC')
+            ->get();
     }
 }

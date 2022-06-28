@@ -17,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class);
 Route::post('/comments', [CommentController::class, 'store']);
+Route::get('/comments/{comment}/children', [CommentController::class, 'children']);

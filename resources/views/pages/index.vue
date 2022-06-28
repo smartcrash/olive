@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import CommentForm from "../components/comment-form.vue";
-import { Comment } from "../../types";
 import CommentItem from "../components/comment-item.vue";
 import CommentList from "../components/comment-list.vue";
 import CommentAdder from "../components/comment-adder.vue";
+import { Comment } from "../../types";
+import Button from "../components/button.vue";
 
 interface Props {
     comments: Comment[];
@@ -55,4 +55,8 @@ const { comments } = defineProps<Props>();
     <CommentList>
         <CommentItem v-for="comment in comments" :comment="comment" />
     </CommentList>
+
+    <div class="flex justify-center mt-5">
+        <Button color-scheme="light">Load more...</Button>
+    </div>
 </template>
