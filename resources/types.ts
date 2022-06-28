@@ -4,4 +4,7 @@ export type Comment = {
     content: string;
     created_at: string;
     updated_at: string;
+    children_count: number;
+    parent_id: number | null
+    path: string
 };
