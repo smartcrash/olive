@@ -5,6 +5,8 @@ import Textarea from "../components/textarea.vue";
 import { Inertia } from "@inertiajs/inertia";
 import useForm from "../../hooks/useForm";
 
+const ESCAPE = "Escape";
+
 type FieldValues = {
     author: string;
     content: string;
@@ -15,9 +17,11 @@ const emit = defineEmits<{
     (e: "cancel"): void;
 }>();
 
-const { handleSubmit, setErrors, isSubmiting, errors } = useForm<FieldValues>({
-    resetAfterSubmit: true,
-});
+const { handleSubmit, setErrors, isSubmiting, errors } = useForm<FieldValues>();
+
+const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key === ESCAPE) emit("cancel");
+};
 
 const onSubmit = handleSubmit((data) => {
     Inertia.post("comments", data, {
@@ -29,7 +33,7 @@ const onSubmit = handleSubmit((data) => {
 </script>
 
 <template>
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="onSubmit" @keydown="onKeyDown">
         <Input
             label="Name"
             name="author"

@@ -10,12 +10,8 @@ const serialize = (form: HTMLFormElement): Record<string, string> => {
     return Object.fromEntries(entries)
 }
 
-interface UseFormOptions {
-    resetAfterSubmit?: boolean
-}
-
 /**  Custom hook to manage a form */
-function useForm<FieldValues extends Record<string, string>, FieldErrors = Partial<FieldValues>>({ resetAfterSubmit = false }: UseFormOptions) {
+function useForm<FieldValues extends Record<string, string>, FieldErrors = Partial<FieldValues>>() {
     const isSubmiting = ref(false);
     const errors: FieldErrors = reactive({} as any)
 
@@ -51,8 +47,6 @@ function useForm<FieldValues extends Record<string, string>, FieldErrors = Parti
 
         const data = serialize(event.target as HTMLFormElement) as FieldValues
         await onValid(data)
-
-        if (resetAfterSubmit) (event.target as HTMLFormElement).reset()
 
         isSubmiting.value = false;
     }
