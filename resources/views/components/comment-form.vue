@@ -2,7 +2,7 @@
 import Input from "../components/input.vue";
 import Button from "../components/button.vue";
 import Textarea from "../components/textarea.vue";
-import { Inertia } from "@inertiajs/inertia";
+import { Comment } from "../../types";
 import useForm from "../../hooks/useForm";
 
 const ESCAPE = "Escape";
@@ -15,27 +15,19 @@ type FieldValues = {
 const { parentId } = defineProps<{ parentId?: number }>();
 
 const emit = defineEmits<{
-    (e: "confirm"): void;
+    (e: "confirm", comment: Partial<Comment>): void;
     (e: "cancel"): void;
 }>();
 
-const { handleSubmit, setErrors, isSubmiting, errors } = useForm<FieldValues>();
+const { handleSubmit, isSubmiting, errors } = useForm<FieldValues>();
 
 const onKeyDown = (event: KeyboardEvent) => {
     if (event.key === ESCAPE) emit("cancel");
 };
 
-const onSubmit = handleSubmit((data) => {
-    Inertia.post(
-        "comments",
-        { ...data, parent_id: parentId ?? "" },
-        {
-            preserveScroll: true,
-            onSuccess: () => emit("confirm"),
-            onError: (error) => setErrors(error as any),
-        }
-    );
-});
+const onSubmit = handleSubmit((data) =>
+    emit("confirm", { ...data, parent_id: parentId })
+);
 </script>
 
 <template>
@@ -43,6 +35,7 @@ const onSubmit = handleSubmit((data) => {
         <Input
             label="Name"
             name="author"
+            required
             placeholder="Enter your name"
             autocomplete="username"
             :error="errors.author"
@@ -52,6 +45,7 @@ const onSubmit = handleSubmit((data) => {
         <Textarea
             name="content"
             label="Comment"
+            required
             :error="errors.content"
             placeholder="Write a commnet..."
             :is-loading="isSubmiting"

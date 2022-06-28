@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import CommentForm from "./comment-form.vue";
 import useDisclosure from "./../../hooks/useDisclosure";
+import { Comment } from "../../types";
+
+const emit = defineEmits<(e: "confirm", comment: Partial<Comment>) => void>();
 
 const { isOpen, onOpen, onClose } = useDisclosure();
 </script>
@@ -13,5 +16,9 @@ const { isOpen, onOpen, onClose } = useDisclosure();
     >
         <i class="mr-3 text-lg">💬</i> Add comment...</a
     >
-    <CommentForm v-else @confirm="onClose" @cancel="onClose" />
+    <CommentForm
+        v-else
+        @confirm="(comment) => emit('confirm', comment)"
+        @cancel="onClose"
+    />
 </template>

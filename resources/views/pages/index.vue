@@ -3,13 +3,21 @@ import CommentItem from "../components/comment-item.vue";
 import CommentList from "../components/comment-list.vue";
 import CommentAdder from "../components/comment-adder.vue";
 import { Comment } from "../../types";
-import Button from "../components/button.vue";
+import { Inertia } from "@inertiajs/inertia";
 
 interface Props {
     comments: Comment[];
 }
 
 const { comments } = defineProps<Props>();
+
+function onNewComment(data: Partial<Comment>) {
+    Inertia.post("comments", data, {
+        preserveScroll: true,
+        onSuccess: () => {}, // TODO: Show toast or something.
+        onError: (error) => console.error(error),
+    });
+}
 </script>
 
 <template layout>
@@ -50,13 +58,16 @@ const { comments } = defineProps<Props>();
 
     <h4 class="text-xl font-semibold mb-6">Comments</h4>
 
-    <CommentAdder />
+    <CommentAdder @confirm="onNewComment" />
 
     <CommentList>
         <CommentItem v-for="comment in comments" :comment="comment" />
     </CommentList>
 
+    <!--
+    TODO: Add pagination.
     <div class="flex justify-center mt-5">
         <Button color-scheme="light">Load more...</Button>
     </div>
+    -->
 </template>
