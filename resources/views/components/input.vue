@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted, ref } from "vue";
+
 interface Props {
     label?: string;
     type?: string;
@@ -36,6 +38,12 @@ const {
     required,
     isLoading = false,
 } = defineProps<Props>();
+
+const inputRef = ref<HTMLInputElement>();
+
+onMounted(() => {
+    if (autoFocus) inputRef.value?.focus();
+});
 </script>
 
 <template>
@@ -43,6 +51,7 @@ const {
         <label v-if="!!label" class="label">{{ label }}</label>
         <div :class="['control', { 'is-loading': isLoading }]">
             <input
+                ref="inputRef"
                 :class="[
                     'input',
                     {
